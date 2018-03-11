@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--后台管理的包-->
+    <context:component-scan base-package="com.sillyboy.customer.open"/>
+
+    <!-- 视图解析器  -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/"/>
+        <!--<property name="suffix" value=".jsp"/>-->
+    </bean>
+
+    <!-- 配置国际化资源文件 -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="i18n"></property>
+    </bean>
+
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean"/>
+
+    <!--如果我们配置了<mvc:view-controller/>标签，将会导致之前的@RequestMapping注解的映射路径失效。-->
+    <!--所以我们要加入<mvc:annotation-driven></mvc:annotation-driven>注解。-->
+    <mvc:annotation-driven/>
+
+    <!-- 上传接收100M的总文件大小 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="104857600"/>
+    </bean>
+
+    <!-- 当Spring容器启动完成后执行下面的这个Bean -->
+    <bean class="com.sillyboy.customer.common.start.InitController"/>
+<!--
+    &lt;!&ndash; 拦截器 - 简单登录验证 &ndash;&gt;
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/api/**"/>
+            <bean class="com.ysotek.customer.common.interceptor.AuthorityInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/api/**"/>
+            <bean class="com.ysotek.customer.common.interceptor.VisitInfoInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>-->
+</beans>

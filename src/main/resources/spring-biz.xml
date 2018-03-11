@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 自动扫描包，自动将@Repository、@Service、@Controller 和 @Component自动实例化 -->
+    <context:component-scan base-package="com.sillyboy.customer">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- Spring 事务配置，声明式事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- LocalContainerEntityManagerFactoryBean 会自动检测 persistence units ，
+     实际上，就是META-INF/persistence.xml（/WEB-INF/classes/META-INF） 文件和web.xml中的persistence-unit-ref，
+     以及定义的environment naming -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    </bean>
+
+<!--    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        &lt;!&ndash;访问的数据源链接路径，默认情况下classpath会搜索META-INF/persistence.xml文件&ndash;&gt;
+        <property name="persistenceXmlLocation"  value="classpath:META-INF/persistence.xml"/>
+    </bean>-->
+
+</beans>
