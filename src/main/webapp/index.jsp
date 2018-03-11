@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>显示用户信息</title>
+    <title>Servlet显示用户信息</title>
     <style type="text/css">
         table,td{
             border: 1px solid;
