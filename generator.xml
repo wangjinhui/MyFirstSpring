@@ -1,0 +1,58 @@
+<?xml version="1.0"  encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration  
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">  
+<generatorConfiguration>  
+  
+    <!-- 鎸囧畾鏁版嵁杩炴帴椹卞姩jar鍦板潃 -->  
+    <classPathEntry location="E:\spring\MySpring\mysql-connector-java-5.1.29.jar" />  
+  
+  
+    <context id="my" targetRuntime="MyBatis3">  
+        <commentGenerator>  
+            <property name="suppressAllComments" value="false" /><!-- 鏄惁鍙栨秷娉ㄩ噴 -->  
+            <property name="suppressDate" value="true" /> <!-- 鏄惁鐢熸垚娉ㄩ噴浠ｆ椂闂存埑 -->   
+        </commentGenerator>  
+  
+		<!-- 数据库链接URL、用户名、密码 -->
+       <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/wjh_spring" userId="root" password="root"/> 
+  
+        <!-- 鐢熸垚瀹炰綋绫诲湴鍧� -->  
+        <javaModelGenerator targetPackage="com.wjh.entity"  
+            targetProject="E:\spring\MySpring\src\main\java">  
+            <property name="enableSubPackages" value="true" />  
+            <property name="trimStrings" value="true" />  
+        </javaModelGenerator>  
+  
+        <!-- 生成mapxml文件 -->  
+        <sqlMapGenerator targetPackage="com.wjh.mapping"  
+            targetProject="E:\spring\MySpring\src\main\java">  
+            <property name="enableSubPackages" value="true" />  
+        </sqlMapGenerator>  
+  
+        <!-- 生成mapxml对应client，也就是接口dao -->  
+        <javaClientGenerator targetPackage="com.wjh.dao"  
+            targetProject="E:\spring\MySpring\src\main\java" type="XMLMAPPER">  
+            <property name="enableSubPackages" value="true" />  
+        </javaClientGenerator>  
+  
+  
+  
+  
+        <table tableName="user"  
+            domainObjectName="User" enableCountByExample="false"  
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">  
+            <!-- schema即为数据库名 tableName为对应的数据库表 domainObjectName是要生成的实体类 enable*ByExample   
+                是否生成 example类 -->  
+  
+            <!-- 忽略列，不生成bean 字段 -->  
+            <!--<ignoreColumn column="FRED" /> -->  
+            <!-- 指定列的java数据类型 -->  
+            <!--<columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> -->  
+        </table>  
+  
+  
+    </context>  
+  
+</generatorConfiguration> 
